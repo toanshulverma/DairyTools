@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html data-theme="light">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+  <title>Milk Standardization Calculator (Pre)</title>
+  <style>
+	@media (min-width: 768px) {
+	  :root,
+	  :host {
+		--pico-font-size: 200%;
+	  }
+	}
+	@media (min-width: 1000px) {
+	  :root,
+	  :host {
+		--pico-font-size: 100%;
+	  }
+	}
+  </style>
+</head>
+<body>
+  <main class="container-fluid">
+		<h2>Milk Standardization Calculator</h2>
+		<h5>Before Cream Extraction</h5>
+		
+		<h3>Enter Values</h3>
+      
+        <fieldset>
+          	<label>आप कितने दूध का मानकीकरण करना चाहते हैं? </label>
+			<input type="number" id="milkQuantity" value="100" required />
+          	<!--  Tell us  How much Kgs of milk  you want to  standardize?  -->
+
+          	<label>आपके  पास  उपलब्ध दूध का फैट% (FAT) क्या है?</label>
+            <input type="number" id="currentFatPercent" value="5" required/>
+          	<!--  What is the FAT% of the  Milk-->
+
+          	<label>लो फैट मानकीकृत दूध में आपको कितने % फैट की आवश्यकता  है? </label>
+            <input type="number" id="targetFatPercent" value="4" required/>
+          	<!--  What Fat% is  required in the Low fat standardized Milk -->
+
+          	<label>मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 40% लिखें।</label>
+			<input type="number" id="creamFatPercent" value="0" required/>
+           	<!--  What is the Fat %  of the cream you  get after separation. If not known, write 50%.-->
+        </fieldset>
+        <button onclick="return calculate();">Calculate</button>
+		<br/>
+		<br/>
+		<h3>Result</h3>
+		<span id="msg" style="color:red"></span> </div>
+		<div id="resultsCard" style="display:none">
+			<table class="striped">
+				<tr style="display:none">
+					<td>फैट प्रतिशत में कटौती का अंतर</td>
+					<td><span id="fatDiff"></span></td>
+				</tr>
+				<tr style="display:none">
+					<td>अलग की जाने वाली फैट प्रतिशत</td>
+					<td><span id="fatToSeparate"></td>
+				</tr>
+				<tr>
+					<td>अलग की जाने वाले दूध (किलोग्राम)</td>
+					<td> <span id="milkToUseForCreamSeparation"></span></td>
+				</tr>
+				<tr>
+					<td>मानकीकृत दूध में फैट% का मानकीकरण (%)</td>
+					<td><span id="fatPercentOfRemainingMilk"></span></td>
+				</tr>
+				<tr style="display:none">
+					<td>निर्माण के दौरान 5% हानि को ध्यान में रखते हुए घी का उत्पादन (यदि घी निर्मित किया जाए)</td>
+					<td><span id="projectedGheeQuantity"></span></td>
+				</tr>
+			</table>
+		</div>
+  </main>
+</body>
+
+<script>
+	function calculate(){
+		
+		milkQuantity = parseFloat(document.getElementById("milkQuantity").value);
+		currentFatPercent = parseFloat(document.getElementById("currentFatPercent").value);
+		targetFatPercent = parseFloat(document.getElementById("targetFatPercent").value);
+		creamFatPercent = parseFloat(document.getElementById("creamFatPercent").value);
+		
+		if(creamFatPercent <=0) creamFatPercent = 50; //default value = 50;
+
+		fatDiff = currentFatPercent - targetFatPercent;
+		
+		if(fatDiff <=0){
+			fatToSeparate = 0;
+			document.getElementById("msg").innerHTML = "गलत मान; लक्ष्य फैट प्रतिशत वर्तमान फैट प्रतिशत से कम नहीं हो सकता"
+			document.getElementById("resultsCard").style.display = 'none';
+			document.getElementById("msg").style.display = '';
+		}
+		else{
+		
+			fatPrecentToSeparate = (currentFatPercent - targetFatPercent) / currentFatPercent;
+			
+			milkToUseForCreamSeparation = Math.floor(milkQuantity * fatPrecentToSeparate);
+		
+			fatPercentOfRemainingMilk = ((milkQuantity - milkToUseForCreamSeparation) * currentFatPercent) / milkQuantity;
+		
+			document.getElementById("milkToUseForCreamSeparation").innerHTML = roundTo(milkToUseForCreamSeparation, 2);
+			document.getElementById("fatPercentOfRemainingMilk").innerHTML = roundTo(fatPercentOfRemainingMilk,2);
+			/*document.getElementById("creamQuantity").innerHTML = roundTo(creamQuantity,2);
+			document.getElementById("milkOutput").innerHTML = roundTo(milkOutput,2);
+			document.getElementById("projectedGheeQuantity").innerHTML = roundTo(projectedGheeQuantity,2);
+			*/
+		  
+			document.getElementById("resultsCard").style.display = '';
+			document.getElementById("msg").style.display = 'none';
+		}
+
+		return false;
+	}
+	
+	function roundTo(num, precision) {
+	  const factor = Math.pow(10, precision);
+	  return Math.round(num * factor) / factor;
+	}
+</script>
+
+</html>
