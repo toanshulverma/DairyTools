@@ -3,6 +3,20 @@
 <head>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
   <title>Milk Standardization Calculator</title>
+  <style>
+	@media (min-width: 576px) {
+	  :root,
+	  :host {
+		--pico-font-size: 200%;
+	  }
+	}
+	@media (min-width: 768px) {
+	  :root,
+	  :host {
+		--pico-font-size: 200%;
+	  }
+	}
+  </style>
 </head>
 <body>
   <main class="container-fluid">
@@ -13,7 +27,7 @@
             <input type="number" id="milkQuantity" value="100" required />
           </label><!--  Tell us  How much Kgs of milk  you want to  standardize?  -->
 
-          <label> आपके  पास  उपलब्ध दूध का फैट% (FAT) क्या है ?
+          <label>आपके  पास  उपलब्ध दूध का फैट% (FAT) क्या है ?
             <input type="number" id="currentFatPercent" value="5" required/>
           </label><!--  What is the FAT% of the  Milk-->
 
@@ -21,7 +35,7 @@
             <input type="number" id="targetFatPercent" value="4" required/>
           </label> <!--  What Fat% is  required in the Low fat standardized Milk -->
 
-          <label> मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 50% लिखें।
+          <label>मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 50% लिखें।
             <input type="number" id="creamFatPercent" value="0" required/>
           </label> <!--  What is the Fat %  of the cream you  get after separation. If not known, write 50%.-->
         </fieldset>
@@ -63,45 +77,45 @@
 <script>
 	function calculate(){
 		
-    milkQuantity = parseFloat(document.getElementById("milkQuantity").value);
-    currentFatPercent = parseFloat(document.getElementById("currentFatPercent").value);
-    targetFatPercent = parseFloat(document.getElementById("targetFatPercent").value);
-    creamFatPercent = parseFloat(document.getElementById("creamFatPercent").value);
-	
-	if(creamFatPercent <=0) creamFatPercent = 50; //default value = 50;
+		milkQuantity = parseFloat(document.getElementById("milkQuantity").value);
+		currentFatPercent = parseFloat(document.getElementById("currentFatPercent").value);
+		targetFatPercent = parseFloat(document.getElementById("targetFatPercent").value);
+		creamFatPercent = parseFloat(document.getElementById("creamFatPercent").value);
+		
+		if(creamFatPercent <=0) creamFatPercent = 50; //default value = 50;
 
-    fatDiff = currentFatPercent - targetFatPercent;
-	
-	if(fatDiff <=0){
-      fatToSeparate = 0;
-      document.getElementById("msg").innerHTML = "गलत मान; लक्ष्य फैट प्रतिशत वर्तमान फैट प्रतिशत से कम नहीं हो सकता"
-	  document.getElementById("resultsCard").style.display = 'none';
-	  document.getElementById("msg").style.display = '';
-    }
-    else{
-	
-		fatToSeparate = creamFatPercent - currentFatPercent;
-		Y = fatToSeparate / (  fatDiff + fatToSeparate);
-		Z = fatDiff / (  fatDiff + fatToSeparate);
-	
-	
-		creamQuantity = milkQuantity * Z;	// Qty of Cream to be separated (Kgs)
-	
-		milkOutput = milkQuantity * Y;		// Output of Milk Kgs of desired fat
-	
-		projectedGheeQuantity = creamQuantity * creamFatPercent * 0.95 // Output of ghee considering 5% losses in manufacturing (In case ghee manufactured)
-	
-		document.getElementById("fatDiff").innerHTML = roundTo(fatDiff, 2);
-		document.getElementById("fatToSeparate").innerHTML = roundTo(fatToSeparate,2);
-		document.getElementById("creamQuantity").innerHTML = roundTo(creamQuantity,2);
-		document.getElementById("milkOutput").innerHTML = roundTo(milkOutput,2);
-		document.getElementById("projectedGheeQuantity").innerHTML = roundTo(projectedGheeQuantity,2);
-	  
-		document.getElementById("resultsCard").style.display = '';
-		document.getElementById("msg").style.display = 'none';
-    }
+		fatDiff = currentFatPercent - targetFatPercent;
+		
+		if(fatDiff <=0){
+			fatToSeparate = 0;
+			document.getElementById("msg").innerHTML = "गलत मान; लक्ष्य फैट प्रतिशत वर्तमान फैट प्रतिशत से कम नहीं हो सकता"
+			document.getElementById("resultsCard").style.display = 'none';
+			document.getElementById("msg").style.display = '';
+		}
+		else{
+		
+			fatToSeparate = creamFatPercent - currentFatPercent;
+			Y = fatToSeparate / (  fatDiff + fatToSeparate);
+			Z = fatDiff / (  fatDiff + fatToSeparate);
+		
+		
+			creamQuantity = milkQuantity * Z;	// Qty of Cream to be separated (Kgs)
+		
+			milkOutput = milkQuantity * Y;		// Output of Milk Kgs of desired fat
+		
+			projectedGheeQuantity = creamQuantity * creamFatPercent * 0.95 // Output of ghee considering 5% losses in manufacturing (In case ghee manufactured)
+		
+			document.getElementById("fatDiff").innerHTML = roundTo(fatDiff, 2);
+			document.getElementById("fatToSeparate").innerHTML = roundTo(fatToSeparate,2);
+			document.getElementById("creamQuantity").innerHTML = roundTo(creamQuantity,2);
+			document.getElementById("milkOutput").innerHTML = roundTo(milkOutput,2);
+			document.getElementById("projectedGheeQuantity").innerHTML = roundTo(projectedGheeQuantity,2);
+		  
+			document.getElementById("resultsCard").style.display = '';
+			document.getElementById("msg").style.display = 'none';
+		}
 
-    return false;
+		return false;
 	}
 	
 	function roundTo(num, precision) {
