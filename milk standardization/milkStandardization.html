@@ -20,28 +20,31 @@
 </head>
 <body>
   <main class="container-fluid">
-		<h1>Enter Values</h1>
+		<h2>Milk Standardization Calculator</h2>
+		
+		<h3>Enter Values</h3>
       
         <fieldset>
-          <label>आप कितने दूध का मानकीकरण करना चाहते हैं?" 
-            <input type="number" id="milkQuantity" value="100" required />
-          </label><!--  Tell us  How much Kgs of milk  you want to  standardize?  -->
+          	<label>आप कितने दूध का मानकीकरण करना चाहते हैं? </label>
+			<input type="number" id="milkQuantity" value="100" required />
+          	<!--  Tell us  How much Kgs of milk  you want to  standardize?  -->
 
-          <label>आपके  पास  उपलब्ध दूध का फैट% (FAT) क्या है ?
+          	<label>आपके  पास  उपलब्ध दूध का फैट% (FAT) क्या है?</label>
             <input type="number" id="currentFatPercent" value="5" required/>
-          </label><!--  What is the FAT% of the  Milk-->
+          	<!--  What is the FAT% of the  Milk-->
 
-          <label>लो फैट मानकीकृत दूध में आपको कितने % फैट की आवश्यकता  है 
+          	<label>लो फैट मानकीकृत दूध में आपको कितने % फैट की आवश्यकता  है? </label>
             <input type="number" id="targetFatPercent" value="4" required/>
-          </label> <!--  What Fat% is  required in the Low fat standardized Milk -->
+          	<!--  What Fat% is  required in the Low fat standardized Milk -->
 
-          <label>मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 40% लिखें।
-            <input type="number" id="creamFatPercent" value="0" required/>
-          </label> <!--  What is the Fat %  of the cream you  get after separation. If not known, write 50%.-->
+          	<label>मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 40% लिखें।</label>
+			<input type="number" id="creamFatPercent" value="0" required/>
+           	<!--  What is the Fat %  of the cream you  get after separation. If not known, write 50%.-->
         </fieldset>
         <button onclick="return calculate();">Calculate</button>
-		
-		<h1>Result</h1>
+		<br/>
+		<br/>
+		<h3>Result</h3>
 		<span id="msg" style="color:red"></span> </div>
 		<div id="resultsCard" style="display:none">
 			<table class="striped">
