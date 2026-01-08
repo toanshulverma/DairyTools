@@ -35,7 +35,7 @@
             <input type="number" id="targetFatPercent" value="4" required/>
           </label> <!--  What Fat% is  required in the Low fat standardized Milk -->
 
-          <label>मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 50% लिखें।
+          <label>मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 40% लिखें।
             <input type="number" id="creamFatPercent" value="0" required/>
           </label> <!--  What is the Fat %  of the cream you  get after separation. If not known, write 50%.-->
         </fieldset>
@@ -45,11 +45,11 @@
 		<span id="msg" style="color:red"></span> </div>
 		<div id="resultsCard" style="display:none">
 			<table class="striped">
-				<tr>
+				<tr style="display:none">
 					<td>फैट प्रतिशत में कटौती का अंतर</td>
 					<td><span id="fatDiff"></span></td>
 				</tr>
-				<tr>
+				<tr style="display:none">
 					<td>अलग की जाने वाली फैट प्रतिशत</td>
 					<td><span id="fatToSeparate"></td>
 				</tr>
@@ -61,13 +61,9 @@
 					<td>वांछित फैट प्रतिशत वाले दूध का उत्पादन (किलोग्राम)</td>
 					<td><span id="milkOutput"></span></td>
 				</tr>
-				<tr>
+				<tr style="display:none">
 					<td>निर्माण के दौरान 5% हानि को ध्यान में रखते हुए घी का उत्पादन (यदि घी निर्मित किया जाए)</td>
 					<td><span id="projectedGheeQuantity"></span></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
 				</tr>
 			</table>
 		</div>
