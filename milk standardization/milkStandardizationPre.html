@@ -12,7 +12,7 @@
 	@media (min-width: 768px) {
 	  :root,
 	  :host {
-		--pico-font-size: 2.5em;
+		--pico-font-size: 2.1em;
 	  }
 	}
 	@media (min-width: 1000px) {
@@ -26,22 +26,24 @@
 <body>
   <main class="container-fluid">
 		<h2>Milk Standardization Calculator</h2>
-		<h5>(Before Cream Extraction)</h5>
+		<h5>(क्रीम निकालने से पहले)</h5>
 		
-		<h3>Enter Values</h3>
-      
-        <fieldset>
-          	<label>आप कितने दूध का मानकीकरण करना चाहते हैं? </label>
+		<fieldset>
+          	<label>दूध की मात्रा </label>
 			<input type="number" id="milkQuantity" value="100" required />
           	<!--  Tell us  How much Kgs of milk  you want to  standardize?  -->
 
-          	<label>आपके पास उपलब्ध दूध का फैट% (FAT) क्या है?</label>
+          	<label>उपलब्ध दूध का फैट% (FAT) क्या है?</label>
             <input type="number" id="currentFatPercent" value="5" required/>
           	<!--  What is the FAT% of the  Milk-->
 
-          	<label>लो फैट मानकीकृत दूध में आपको कितने % फैट की आवश्यकता  है? </label>
+          	<label>दूध में आपको कितने % फैट की आवश्यकता है? </label>
             <input type="number" id="targetFatPercent" value="4" required/>
           	<!--  What Fat% is  required in the Low fat standardized Milk -->
+
+			<label>मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 40% लिखें।</label>
+			<input type="number" id="creamFatPercent" value="40" required/>
+           	<!--  What is the Fat %  of the cream you  get after separation. If not known, write 50%.-->
         </fieldset>
         <button onclick="return calculate();">Calculate</button>
 		<br/>
@@ -68,6 +70,14 @@
 					
 					</td>
 				</tr>
+				<tr>
+					<td>अलग की जाने वाली क्रीम (किलोग्राम)</td>
+					<td> <span id="creamQuantity"></span></td>
+				</tr>
+				<tr>
+					<td>मानकीकृत दूध की मात्रा (किलोग्राम)</td>
+					<td><span id="milkOutput"></span></td>
+				</tr>
 			</table>
 		</div>
   </main>
@@ -79,11 +89,12 @@
 		milkQuantity = parseFloat(document.getElementById("milkQuantity").value);
 		currentFatPercent = parseFloat(document.getElementById("currentFatPercent").value);
 		targetFatPercent = parseFloat(document.getElementById("targetFatPercent").value);
+		creamFatPercent = parseFloat(document.getElementById("creamFatPercent").value);
 		
 		fatDiff = currentFatPercent - targetFatPercent;
 		
 		if(milkQuantity <=0){
-			document.getElementById("msg").innerHTML = "आप कितने दूध का मानकीकरण करना चाहते हैं?"
+			document.getElementById("msg").innerHTML = "दूध की मात्रा आवश्यक है"
 			document.getElementById("resultsCard").style.display = 'none';
 			document.getElementById("msg").style.display = '';
 		}
@@ -97,6 +108,15 @@
 		
 			//calculate % of fat% to be reduced
 			fatPrecentToSeparate = (currentFatPercent - targetFatPercent) / currentFatPercent; 
+
+			fatToSeparate = creamFatPercent - currentFatPercent;
+			Y = fatToSeparate / (  fatDiff + fatToSeparate);
+			Z = fatDiff / (  fatDiff + fatToSeparate);
+		
+		
+			creamQuantity = milkQuantity * Z;	// Qty of Cream to be separated (Kgs)
+		
+			milkOutput = milkQuantity * Y;		// Output of Milk Kgs of desired fat
 			
 			//calculate milk to be removed, so that it is mixed back (after milk separation) the Fat% of combined milk comes to target Fat%
 			milkToUseForCreamSeparation = Math.floor(milkQuantity * fatPrecentToSeparate);
@@ -106,6 +126,9 @@
 		
 			document.getElementById("milkToUseForCreamSeparation").innerHTML = roundTo(milkToUseForCreamSeparation, 2);
 			document.getElementById("fatPercentOfRemainingMilk").innerHTML = roundTo(fatPercentOfRemainingMilk,2);
+
+			document.getElementById("creamQuantity").innerHTML = roundTo(creamQuantity,2);
+			document.getElementById("milkOutput").innerHTML = roundTo(milkOutput,2);
 
 			if(fatPercentOfRemainingMilk >= targetFatPercent){
 				document.getElementById("calcSuccess").style.display = '';
