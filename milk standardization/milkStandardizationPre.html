@@ -11,6 +11,11 @@
 		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
   <title>Milk Standardization Calculator (Pre)</title>
+  <style>
+	.smallText{
+		font-size: 80%;
+	}
+  </style>
   <!-- <style>
 	@media (min-width: 768px) {
 	  :root,
@@ -28,9 +33,8 @@
 </head>
 <body>
   <main class="container-fluid">
-		<h4>Milk Standardization Calculator</h4>
-		<h5>(क्रीम निकालने से पहले)</h5>
-		
+		<h3>Milk Standardization Calculator</h3>
+		<h6>(क्रीम निकालने से पहले)</h6>
 		<fieldset>
           	<label>दूध की मात्रा </label>
 			<input type="number" id="milkQuantity" value="100" required />
@@ -44,14 +48,14 @@
             <input type="number" id="targetFatPercent" value="4" required/>
           	<!--  What Fat% is  required in the Low fat standardized Milk -->
 
-			<label>मिलने वाली क्रीम का फैट% कितना होता है। यदि ज्ञात नहीं है, तो 40% लिखें।</label>
+			<label>मिलने वाली क्रीम का फैट% कितना होता है।<br> <span class="smallText">यदि ज्ञात नहीं है, तो 40% लिखें।</span></label>
 			<input type="number" id="creamFatPercent" value="40" required/>
            	<!--  What is the Fat %  of the cream you  get after separation. If not known, write 50%.-->
         </fieldset>
-        <button onclick="return calculate();">Calculate</button>
+        <button onclick="return calculate();">गणना करें</button>
 		<br/>
 		<br/>
-		<h3>Result</h3>
+		<h3>परिणाम</h3>
 		<span id="msg" style="color:red"></span> </div>
 		<div id="resultsCard" style="display:none">
 			<table class="striped">
